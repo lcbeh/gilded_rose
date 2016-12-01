@@ -90,7 +90,6 @@ describe GildedRose do
 
       it "increase backstage passes quality value by 3 if sell_in is 5 or less" do
         16.times { @gilded_rose.update_quality }
-        p @items[0].sell_in
         expect(@items[0].quality).to eq 43
       end
 

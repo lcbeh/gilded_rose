@@ -22,11 +22,11 @@ class GildedRose
   end
 
   def update_conjured_item(item)
-    item.quality -= 2
+    item.quality -= 2 if item.quality > 2
   end
 
   def update_sulfuras(item)
-    item.sell_in += 1
+    item.sell_in += 1 #to ensure value remains when sell_in is deducted from all items
   end
 
   def update_age_brie(item)
