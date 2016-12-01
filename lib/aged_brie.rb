@@ -1,7 +1,7 @@
-class ConjuredItem < Item
+class AgedBrie < Item
 
   def update_quality
-    @quality -= 2 if @quality > 2
+    @quality += 1 if @quality < 50
   end
 
   def update_sell_in

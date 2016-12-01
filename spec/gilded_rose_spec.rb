@@ -1,5 +1,9 @@
 require 'gilded_rose'
 require 'item'
+require 'aged_brie'
+require 'backstage_pass'
+require 'common_item'
+require 'Sulfuras'
 require 'conjured_item'
 
 describe GildedRose do
@@ -7,7 +11,7 @@ describe GildedRose do
   describe "#update_quality" do
     context "for general items" do
       before(:each) do
-        @items = [Item.new("honey", 5, 10)]
+        @items = [CommonItem.new("honey", 5, 10)]
         @gilded_rose = GildedRose.new(@items)
       end
 
@@ -32,7 +36,7 @@ describe GildedRose do
       end
 
       it "drops common items quality value by 2 if sell by date has passed" do
-        new_item = [Item.new("mango",-1, 10)]
+        new_item = [CommonItem.new("mango",-1, 10)]
         GildedRose.new(new_item).update_quality
         expect(new_item[0].quality).to eq 8
       end
@@ -40,7 +44,7 @@ describe GildedRose do
 
     context "for Aged Brie" do
       before(:each) do
-        @items = [Item.new("Aged Brie", 10, 40)]
+        @items = [AgedBrie.new("Aged Brie", 10, 40)]
         @gilded_rose = GildedRose.new(@items)
       end
 
@@ -57,7 +61,7 @@ describe GildedRose do
 
     context "for Sulfuras" do
       before(:each) do
-        @items = [Item.new("Sulfuras, Hand of Ragnaros", 10, 40)]
+        @items = [Sulfuras.new("Sulfuras, Hand of Ragnaros", 10, 40)]
         @gilded_rose = GildedRose.new(@items)
       end
 
@@ -74,7 +78,7 @@ describe GildedRose do
 
     context "for Backstage passes" do
       before(:each) do
-        @items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 20, 20)]
+        @items = [BackstagePass.new("Backstage passes to a TAFKAL80ETC concert", 20, 20)]
         @gilded_rose = GildedRose.new(@items)
       end
 
