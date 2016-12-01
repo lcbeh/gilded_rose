@@ -69,6 +69,33 @@ describe GildedRose do
       end
     end
 
+    context "Backstage passes" do
+      before(:each) do
+        @items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 20, 20)]
+        @gilded_rose = GildedRose.new(@items)
+      end
+
+      it "increase backstage passes quality value by 1 if sell_in is more than 10" do
+        @gilded_rose.update_quality
+        expect(@items[0].quality).to eq 21
+      end
+
+      it "increase backstage passes quality value by 2 if sell_in is less than 10 but greater than 5" do
+        11.times { @gilded_rose.update_quality }
+        expect(@items[0].quality).to eq 32
+      end
+
+      it "increase backstage passes quality value by 3 if sell_in is 5 or less" do
+        16.times { @gilded_rose.update_quality }
+        expect(@items[0].quality).to eq 43
+      end
+
+      it "drops backstage passes quality value to zero when sell_in is less than 0" do
+        21.times { @gilded_rose.update_quality }
+        expect(@items[0].quality).to eq 0
+      end
+    end
+
   end
 
 end
