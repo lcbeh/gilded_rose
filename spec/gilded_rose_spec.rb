@@ -30,9 +30,10 @@ describe GildedRose do
         expect(@items[0].quality).to eq 0
       end
 
-      it "drops common items quality value by 2 if sell by date has passed" do
-        6.times { @gilded_rose.update_quality }
-        expect(@items[0].quality).to eq 3
+      it "drops common items quality value by 2 if sell by date has passed", :focus => true  do
+        new_item = [Item.new("mango",-1, 10)]
+        GildedRose.new(new_item).update_quality
+        expect(new_item[0].quality).to eq 8
       end
     end
 
@@ -88,11 +89,12 @@ describe GildedRose do
 
       it "increase backstage passes quality value by 3 if sell_in is 5 or less" do
         16.times { @gilded_rose.update_quality }
+        p @items[0].sell_in
         expect(@items[0].quality).to eq 43
       end
 
       it "drops backstage passes quality value to zero when sell_in is less than 0" do
-        21.times { @gilded_rose.update_quality }
+        25.times { @gilded_rose.update_quality }
         expect(@items[0].quality).to eq 0
       end
     end
