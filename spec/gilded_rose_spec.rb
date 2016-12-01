@@ -1,10 +1,11 @@
 require 'gilded_rose'
 require 'item'
+require 'conjured_item'
 
 describe GildedRose do
 
   describe "#update_quality" do
-    context "general items" do
+    context "for general items" do
       before(:each) do
         @items = [Item.new("honey", 5, 10)]
         @gilded_rose = GildedRose.new(@items)
@@ -30,14 +31,14 @@ describe GildedRose do
         expect(@items[0].quality).to eq 0
       end
 
-      it "drops common items quality value by 2 if sell by date has passed", :focus => true  do
+      it "drops common items quality value by 2 if sell by date has passed" do
         new_item = [Item.new("mango",-1, 10)]
         GildedRose.new(new_item).update_quality
         expect(new_item[0].quality).to eq 8
       end
     end
 
-    context "Aged Brie" do
+    context "for Aged Brie" do
       before(:each) do
         @items = [Item.new("Aged Brie", 10, 40)]
         @gilded_rose = GildedRose.new(@items)
@@ -54,7 +55,7 @@ describe GildedRose do
       end
     end
 
-    context "Sulfuras" do
+    context "for Sulfuras" do
       before(:each) do
         @items = [Item.new("Sulfuras, Hand of Ragnaros", 10, 40)]
         @gilded_rose = GildedRose.new(@items)
@@ -71,7 +72,7 @@ describe GildedRose do
       end
     end
 
-    context "Backstage passes" do
+    context "for Backstage passes" do
       before(:each) do
         @items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 20, 20)]
         @gilded_rose = GildedRose.new(@items)
@@ -96,6 +97,20 @@ describe GildedRose do
       it "drops backstage passes quality value to zero when sell_in is less than 0" do
         25.times { @gilded_rose.update_quality }
         expect(@items[0].quality).to eq 0
+      end
+    end
+
+    context "for conjured items" do
+      it "can detect conjured items" do
+        conjured_items = [ConjuredItem.new("wand",1, 10)]
+        GildedRose.new(conjured_items)
+        expect(conjured_items[0].is_a?ConjuredItem).to be true
+      end
+
+      it "drops quality value twice as fast as common items" do
+        conjured_items = [ConjuredItem.new("wand",1, 10)]
+        GildedRose.new(conjured_items).update_quality
+        expect(conjured_items[0].quality).to eq 8
       end
     end
 

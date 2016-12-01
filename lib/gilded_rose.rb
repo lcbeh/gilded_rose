@@ -6,7 +6,9 @@ class GildedRose
 
   def update_quality()
     @items.each do |item|
-      if item.name == "Sulfuras, Hand of Ragnaros"
+      if item.is_a? ConjuredItem
+        update_conjured_item(item)
+      elsif item.name == "Sulfuras, Hand of Ragnaros"
         update_sulfuras(item)
       elsif item.name == "Aged Brie"
         update_age_brie(item)
@@ -19,9 +21,8 @@ class GildedRose
     end
   end
 
-  def update_common_item(item)
-    item.quality -= 2 if item.quality > 0 && item.sell_in < 0
-    item.quality -= 1 if item.quality > 0 && item.sell_in >= 0
+  def update_conjured_item(item)
+    item.quality -= 2
   end
 
   def update_sulfuras(item)
@@ -42,4 +43,8 @@ class GildedRose
     end
   end
 
+  def update_common_item(item)
+    item.quality -= 2 if item.quality > 0 && item.sell_in < 0
+    item.quality -= 1 if item.quality > 0 && item.sell_in >= 0
+  end
 end

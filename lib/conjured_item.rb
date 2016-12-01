@@ -1,0 +1,3 @@
+class ConjuredItem < Item
+
+end
